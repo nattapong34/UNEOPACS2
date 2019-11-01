@@ -1,0 +1,120 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="uneo.master.cs" Inherits="UNEOPACS2.uneo" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>UNEO Server2</title>
+    <link id="Link1" runat="server" rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
+    <link id="Link2" runat="server" rel="icon" href="~/favicon.ico" type="image/ico" />
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/Scripts/MDB-Free_4.8.10/css/mdb.min.css" rel="stylesheet" />
+    <link href="~/Scripts/Login_v1/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Scripts/Login_v1/vendor/animate/animate.css" rel="stylesheet" />
+    <link href="~/Scripts/Login_v1/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" />
+    <link href="~/Scripts/Login_v1/vendor/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Scripts/Login_v1/css/util.css" rel="stylesheet" />
+    <link href="~/Scripts/Login_v1/css/main.css" rel="stylesheet" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <nav class="navbar navbar-light" style="background-color: #204e4d;">
+            <a class="navbar-brand" href="#">
+                <img src="/media/uneo.png"  height="30" class="d-inline-block align-top" alt="" />
+                <span class="text-white"><%= ins %></span></a>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   <i class="fa fa-user-o" aria-hidden="true"></i><span class="text-white"> <%=Session["fullname"].ToString() %> </span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a href="" data-toggle="modal" data-target="#mdChangepass"><i class="fa fa-key" aria-hidden="true"></i>เปลี่ยนรหัสผ่าน</a>
+                    <div class="dropdown-divider"></div>
+                    <asp:LinkButton ID="LinkButton1" runat="server" CssClass="dropdown-item" OnClick="lbLogoff_Click"><i class="fa fa-sign-out" aria-hidden="true"></i>Logoff</asp:LinkButton>
+                </div>
+            </li>
+        </nav>
+
+        <%--modal changepass--%>
+
+        <div class="modal fade" id="mdChangepass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel2">เปลี่ยนรหัสผ่าน</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Password เก่า :</label>
+                            <asp:TextBox ID="txtcpPass" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Password ใหม่ :</label>
+                            <asp:TextBox ID="txtcpNewpass" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button ID="Button1" runat="server" Text="ยกเลิก" CssClass="btn btn-secondary" data-dismiss="modal" />
+                        <asp:Button ID="bncpAdd" runat="server" Text="บันทึก" CssClass="btn btn-primary" OnClick="bncpAdd_Click" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--End modal changepass--%>
+
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+
+
+
+                <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+                <script src="~/Scripts/bootstrap.min.js"></script>
+                <script src="~/Scripts/MDB-Free_4.8.10/js/mdb.min.js"></script>
+                <script src="~/Scripts/popper.min.js"></script>
+                <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+
+
+                <script src="~/Scripts/Login_v1/vendor/select2/select2.min.js"></script>
+                <script src="~/Scripts/Login_v1/vendor/tilt/tilt.jquery.min.js"></script>
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+    
+    <!-- Modal Popup -->
+    <div id="MyPopup" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Popup -->
+    <script>
+        function ShowPopup(title, body) {
+            $("#MyPopup .modal-title").html(title);
+            $("#MyPopup .modal-body").html(body);
+            $("#MyPopup").modal("show");
+        }
+    </script>
+</body>
+</html>

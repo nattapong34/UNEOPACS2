@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="UNEOPACS2.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SWAP_NAME" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="PACS_LINK" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/ImageServerAlpha/Pages/WebViewer/Default.aspx</Value>
+    </Setting>
+    <Setting Name="HOSPITAL_NAME" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">โรงพยาบาล ทดสอบ แผนก X-RAY</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
