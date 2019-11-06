@@ -6,6 +6,7 @@
     <link href="../Content/bootstrap.min.css" rel="stylesheet" />
     <link href="../Content/bootstrap-grid.min.css" rel="stylesheet" />
     <link href="../Content/bootstrap-select.css" rel="stylesheet" />
+
     <link href="../Scripts/DataTables/datatables.min.css" rel="stylesheet" />
     <link href="../Content/bootstrap-datepicker.min.css" rel="stylesheet" />
     <link href="../Scripts/MDB-Free_4.8.10/css/mdb.min.css" rel="stylesheet" />
@@ -17,18 +18,17 @@
     <script src="../Scripts/jquery-3.4.1.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
     <script src="../Scripts/popper.min.js"></script>
-    <script src="../Scripts/bootstrap-select.js"></script>
     <script src="../Scripts/DataTables/datatables.min.js"></script>
     <script src="../Scripts/bootstrap-datepicker.min.js"></script>
     <script src="../Scripts/locales/bootstrap-datepicker.th.min.js"></script>
     <script src="../Scripts/MDB-Free_4.8.10/js/mdb.min.js"></script>
     <script src="../Scripts/jquery.confirm.min.js"></script>
     <script src="../Scripts/tinymce/tinymce.min.js"></script>
-
+    <script src="../Scripts/bootstrap-select.js"></script>
 
     <div id="body">
         <div class="cloudy-knoxville-gradient">
-            <div class="rgba-cyan-slight">
+            <div class="rgba-cyan-slight mt-xl-5">
 
                 <div class="form-group">
                     <div class="container">
@@ -80,20 +80,22 @@
                                     <label for="txtDesc">รายการ</label>
                                 </div>
                             </div>
-                            <asp:CheckBoxList ID="cbMod" runat="server"
-                                BorderStyle="None" Font-Bold="True" Font-Names="Arial" Font-Size="Small"
-                                ForeColor="Black" RepeatDirection="Horizontal" Width="356px" CssClass="btn-group btn-group-toggle">
-                                <asp:ListItem Selected="True">CR</asp:ListItem>
-                                <asp:ListItem Selected="True">DX</asp:ListItem>
-                                <asp:ListItem Selected="True">CT</asp:ListItem>
-                                <asp:ListItem Selected="True">MR</asp:ListItem>
-                                <asp:ListItem Selected="True">US</asp:ListItem>
-                                <asp:ListItem Selected="True">NM</asp:ListItem>
-                                <asp:ListItem Selected="True">XA</asp:ListItem>
-                                <asp:ListItem Selected="True">MG</asp:ListItem>
-                                <asp:ListItem Selected="True">CS</asp:ListItem>
-                                <asp:ListItem Selected="True">MD</asp:ListItem>
-                            </asp:CheckBoxList>
+                            <div class="col-lg-4">
+                                <asp:CheckBoxList ID="cbMod" runat="server"
+                                    BorderStyle="None" Font-Bold="True" Font-Names="Arial" Font-Size="Small"
+                                    ForeColor="Black" RepeatDirection="Horizontal" Width="356px" CssClass="btn-group btn-group-toggle">
+                                    <asp:ListItem Selected="True">CR</asp:ListItem>
+                                    <asp:ListItem Selected="True">DX</asp:ListItem>
+                                    <asp:ListItem Selected="True">CT</asp:ListItem>
+                                    <asp:ListItem Selected="True">MR</asp:ListItem>
+                                    <asp:ListItem Selected="True">US</asp:ListItem>
+                                    <asp:ListItem Selected="True">NM</asp:ListItem>
+                                    <asp:ListItem Selected="True">XA</asp:ListItem>
+                                    <asp:ListItem Selected="True">MG</asp:ListItem>
+                                    <asp:ListItem Selected="True">CS</asp:ListItem>
+                                    <asp:ListItem Selected="True">MD</asp:ListItem>
+                                </asp:CheckBoxList>
+                            </div>
                             <div class="col-lg-4">
                                 <asp:Button ID="bnToday" runat="server" Text="วันนี้" CssClass="btn aqua-gradient mb-4" OnClick="bnToday_Click" />
                                 <asp:Button ID="bnYesterday" runat="server" Text="เมื่อวาน" CssClass="btn peach-gradient mb-4" OnClick="bnYesterday_Click" />
@@ -216,7 +218,7 @@
 
     <!-- Modal report -->
     <div id="mdReport" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-xl modal-full-height modal-top modal-notify modal-warning">
+        <div class="modal-dialog modal-xl modal-full-height modal-top modal-notify  modal-warning">
             <input type="hidden" class="form-control-plaintext" name="stuid" id="stuid" value="" />
             <!-- Modal content-->
             <div class="modal-content">
@@ -251,25 +253,17 @@
                             <input type="text" class="form-control-plaintext" name="dt" id="dt" value="" />
                         </div>
                     </div>
-                   <div align="right">
-                        <div class="row">    
-                            <div class="col-sm">
-                                &nbsp; &nbsp; &nbsp; &nbsp;
-                            </div>
-                            <!-- Default inline 1-->
-                            <div class="col-sm">
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample">
-                                    <label class="custom-control-label" for="defaultInline1">ปกติ</label>
-                                </div>
-                            </div>
-
-                            <!-- Default inline 2-->
-                            <div class="col-sm">
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample">
-                                    <label class="custom-control-label" for="defaultInline2">ผิดปกติ</label>
-                                </div>
+                    <div align="right">
+                        <div class="row">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-deep-orange form-check-label">
+                                    <input class="form-check-input" type="radio" name="options" id="option1" autocomplete="off">
+                                    ผิดปกติ
+                                </label>
+                                <label class="btn dusty-grass-gradient form-check-label">
+                                    <input class="form-check-input" type="radio" name="options" id="option2" autocomplete="off">
+                                    ปกติ
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -295,6 +289,8 @@
                 height: 350
             });
 
+            // Section Modal Report
+
             $("#mdReport").on('shown.bs.modal', function () {
                 var txt = $('#stuid').val().split("|");
 
@@ -309,10 +305,25 @@
                 $('#name').val(name);
                 $('#desc').val(desc);
                 $('#dt').val(dt + ' ' + tm);
-
                 //alert(id + " " + hn + " " + name);
+               //alert($(location).attr('href') + "/getReport");
+                $.ajax({
+                    type: "POST",
+                    url: "/service/report.asmx/HelloWorld",
+                    data: "{}",//JSON.stringify({ stuid: id }), 
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(textStatus);
+                    },
+                    success: function (response) {
+                        alert(response.d);
+                    }  
+                });
 
             });
+
+            // end section modal report
 
             $(document).on("click", ".bnrpt", function () {
                 var myBookId = $(this).data('id');
@@ -322,7 +333,7 @@
             var table = $("#tbStudy").DataTable(
                 {
                     'responsive': true,
-                    scrollY: '50vh',
+                    scrollY: '45vh',
                     scrollCollapse: true,
                     paging: false,
                     "language": {

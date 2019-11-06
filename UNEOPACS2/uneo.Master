@@ -24,14 +24,14 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <nav class="navbar navbar-light" style="background-color: #204e4d;">
+        <nav class="navbar fixed-top navbar-light blue-gradient">
             <a class="navbar-brand" href="#">
-                <img src="/media/uneo.png"  height="30" class="d-inline-block align-top" alt="" />
+                <img src="/media/uneo.png" height="30" class="d-inline-block align-top" alt="" />
                 <span class="text-white"><%= ins %></span></a>
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   <i class="fa fa-user-o" aria-hidden="true"></i><span class="text-white"> <%=Session["fullname"].ToString() %> </span>
+                    <i class="fa fa-user-o" aria-hidden="true"></i><span class="text-white"><%=Session["fullname"].ToString() %> </span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a href="" data-toggle="modal" data-target="#mdChangepass"><i class="fa fa-key" aria-hidden="true"></i>เปลี่ยนรหัสผ่าน</a>
@@ -88,7 +88,7 @@
             </asp:ContentPlaceHolder>
         </div>
     </form>
-    
+
     <!-- Modal Popup -->
     <div id="MyPopup" class="modal fade" role="dialog">
         <div class="modal-dialog">

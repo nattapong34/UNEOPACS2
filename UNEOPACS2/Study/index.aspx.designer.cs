@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UNEOPACS2.Study {
-    
-    
-    public partial class index {
-        
+namespace UNEOPACS2.Study
+{
+
+
+    public partial class index
+    {
+
         /// <summary>
         /// txtID control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace UNEOPACS2.Study {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtID;
-        
+
         /// <summary>
         /// txtName control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace UNEOPACS2.Study {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtName;
-        
+
         /// <summary>
         /// txtDt1 control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace UNEOPACS2.Study {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDt1;
-        
+
         /// <summary>
         /// txtDt2 control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace UNEOPACS2.Study {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDt2;
-        
+
         /// <summary>
         /// txtDoc control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace UNEOPACS2.Study {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDoc;
-        
+
         /// <summary>
         /// txtDesc control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace UNEOPACS2.Study {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDesc;
-        
+
         /// <summary>
         /// cbMod control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace UNEOPACS2.Study {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBoxList cbMod;
-        
+
         /// <summary>
         /// bnToday control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace UNEOPACS2.Study {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button bnToday;
-        
+
         /// <summary>
         /// bnYesterday control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace UNEOPACS2.Study {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button bnYesterday;
-        
+
         /// <summary>
         /// bnFind control.
         /// </summary>

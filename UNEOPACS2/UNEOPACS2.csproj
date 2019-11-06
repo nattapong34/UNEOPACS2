@@ -922,6 +922,7 @@
     <Content Include="Scripts\WebForms\WebForms.js" />
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
+    <Content Include="service\report.asmx" />
     <Content Include="Site.Master" />
     <Content Include="Study\index.aspx" />
     <Content Include="ViewSwitcher.ascx" />
@@ -962,6 +963,10 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="service\report.asmx.cs">
+      <DependentUpon>report.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

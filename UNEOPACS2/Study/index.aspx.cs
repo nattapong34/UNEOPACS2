@@ -2,7 +2,7 @@
 using System.Data;
 using System.Globalization;
 using System.Web.UI.WebControls;
-
+using System.Web.Services;
 
 namespace UNEOPACS2.Study
 {
@@ -32,7 +32,8 @@ namespace UNEOPACS2.Study
             {
                 DateTime d = DateTime.ParseExact(dd, "yyyyMMdd", CultureInfo.InvariantCulture);
                 return d.ToString("dd/MM/yyyy");
-            }catch
+            }
+            catch
             {
                 return dd;
             }
@@ -45,7 +46,8 @@ namespace UNEOPACS2.Study
                     return (tt.Substring(0, 2) + ":" + tt.Substring(2, 2) + ":" + tt.Substring(4, 2));
                 else
                     return tt;
-            } catch
+            }
+            catch
             {
                 return tt;
             }
@@ -83,14 +85,15 @@ namespace UNEOPACS2.Study
                 {
                     return "-";
                 }
-            }catch
+            }
+            catch
             {
                 return "-";
             }
         }
         public string formatName(string n)
         {
-           string[] tmp = n.Split('^');
+            string[] tmp = n.Split('^');
             if (tmp.Length > 1)
             {
                 if (!Properties.Settings.Default.SWAP_NAME)
@@ -100,7 +103,7 @@ namespace UNEOPACS2.Study
             }
             return n;
         }
-        public string pacsLink(string md,string ln)
+        public string pacsLink(string md, string ln)
         {
             string url = Properties.Settings.Default.PACS_LINK;
             url += "?study=";
@@ -288,7 +291,7 @@ namespace UNEOPACS2.Study
             if (_mod.IndexOf("MD") > -1)
             {
                 SqlQueryMD();
-            }                     
+            }
         }
 
         protected void bnFind_Click(object sender, EventArgs e)
@@ -310,6 +313,15 @@ namespace UNEOPACS2.Study
             txtDt1.Text = DateTime.Now.ToString("dd/MM/yyyy");
             txtDt2.Text = DateTime.Now.ToString("dd/MM/yyyy");
             find();
+        }
+
+
+        [WebMethod]
+        public static string getReport(string stuid=null)
+        {
+            //Send message
+            var res = stuid;
+            return res;
         }
     }
 }
