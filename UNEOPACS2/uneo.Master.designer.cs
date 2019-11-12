@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UNEOPACS2 {
-    
-    
-    public partial class uneo {
-        
+namespace UNEOPACS2
+{
+
+
+    public partial class uneo
+    {
+
         /// <summary>
         /// Link1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace UNEOPACS2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlLink Link1;
-        
+
         /// <summary>
         /// Link2 control.
         /// </summary>
@@ -29,16 +31,7 @@ namespace UNEOPACS2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlLink Link2;
-        
-        /// <summary>
-        /// head control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
-        
+
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -47,7 +40,7 @@ namespace UNEOPACS2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
+
         /// <summary>
         /// LinkButton1 control.
         /// </summary>
@@ -56,7 +49,16 @@ namespace UNEOPACS2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
-        
+
+        /// <summary>
+        /// head control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+
         /// <summary>
         /// txtcpPass control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace UNEOPACS2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtcpPass;
-        
+
         /// <summary>
         /// txtcpNewpass control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace UNEOPACS2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtcpNewpass;
-        
+
         /// <summary>
         /// Button1 control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace UNEOPACS2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
-        
+
         /// <summary>
         /// bncpAdd control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace UNEOPACS2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button bncpAdd;
-        
+
         /// <summary>
         /// ContentPlaceHolder1 control.
         /// </summary>

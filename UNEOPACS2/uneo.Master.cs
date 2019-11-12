@@ -20,7 +20,7 @@ namespace UNEOPACS2
             }
 
            ins= Properties.Settings.Default.HOSPITAL_NAME;
-            //d
+            //
         }
 
         protected void lbLogoff_Click(object sender, EventArgs e)

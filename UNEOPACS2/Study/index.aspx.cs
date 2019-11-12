@@ -3,14 +3,16 @@ using System.Data;
 using System.Globalization;
 using System.Web.UI.WebControls;
 using System.Web.Services;
+using System.Web.Script.Services;
 
 namespace UNEOPACS2.Study
 {
     public partial class index : System.Web.UI.Page
     {
         CultureInfo uIE = new System.Globalization.CultureInfo("en-US");
+        CultureInfo uTH = new System.Globalization.CultureInfo("th-TH");
         public static CConnect db;
-        private string _mod;
+        private static string _mod;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -26,11 +28,11 @@ namespace UNEOPACS2.Study
             y = dt.Substring(6, 4);
             return y + m + d;
         }
-        public string formatDate(string dd)
+        public string formatDate(string dd, bool th = false)
         {
             try
             {
-                DateTime d = DateTime.ParseExact(dd, "yyyyMMdd", CultureInfo.InvariantCulture);
+                DateTime d = DateTime.ParseExact(dd, "yyyyMMdd", th ? uTH : CultureInfo.InvariantCulture);
                 return d.ToString("dd/MM/yyyy");
             }
             catch
@@ -103,6 +105,10 @@ namespace UNEOPACS2.Study
             }
             return n;
         }
+        public string ins()
+        {
+            return Properties.Settings.Default.HOSPITAL_NAME;
+        }
         public string pacsLink(string md, string ln)
         {
             string url = Properties.Settings.Default.PACS_LINK;
@@ -115,10 +121,12 @@ namespace UNEOPACS2.Study
         }
         private string sqlPacs()
         {
+
+
             string sql = "";
             sql = "SELECT  DISTINCT dbo.Study.PatientId, dbo.Study.PatientsName,dbo.Study.StudyDate,dbo.Study.StudyTime, dbo.Study.AccessionNumber as vn,dbo.Study.PatientsBirthDate,dbo.Study.PatientsAge,";
             sql += "dbo.Study.StudyDescription,dbo.Study.ReferringPhysiciansName, dbo.Study.NumberOfStudyRelatedSeries,";
-            sql += "dbo.Study.NumberOfStudyRelatedInstances, dbo.Series.Modality,dbo.Study.StudyInstanceUid,dbo.StudyReport.ondate,dbo.Study.StudyInstanceUid as urlview FROM  dbo.Study INNER JOIN";
+            sql += "dbo.Study.NumberOfStudyRelatedInstances, dbo.Series.Modality,dbo.Study.StudyInstanceUid,dbo.StudyReport.ondate,dbo.Study.StudyInstanceUid as urlview,dbo.StudyReport.normal as rpStatus FROM  dbo.Study INNER JOIN";
             sql += " dbo.Series ON dbo.Study.GUID = dbo.Series.StudyGUID";
             sql += "  LEFT OUTER JOIN dbo.StudyReport ON dbo.Study.StudyInstanceUid = dbo.StudyReport.StudyInstanceUid";
 
@@ -173,26 +181,42 @@ namespace UNEOPACS2.Study
                 sql += where;
                 sql += "StudyDate >= '" + string2date(txtDt1.Text) + "' and StudyDate <='" + string2date(txtDt2.Text) + "'";
             }
-            if (!string.IsNullOrEmpty(txtDoc.Text))
-            {
-                where = !string.IsNullOrEmpty(where) ? " and " : " where ";
-                sql += where;
-                sql += "ReferringPhysiciansName like '%" + txtDoc.Text + "%'";
-            }
+            //if (!string.IsNullOrEmpty(txtDoc.Text))
+            //{
+            //    where = !string.IsNullOrEmpty(where) ? " and " : " where ";
+            //    sql += where;
+            //    sql += "ReferringPhysiciansName like '%" + txtDoc.Text + "%'";
+            //}
             // modality
             _mod = "";
-            foreach (ListItem li in cbMod.Items)
+            string tmp = "";
+            try
             {
-                if (li.Selected)
+                _mod = Page.Request.Form["msMod"].ToString() ?? "";
+                string[] m = _mod.Split(',');
+
+                foreach (string d in m)
                 {
-                    _mod += (string.IsNullOrEmpty(_mod) ? "" : ",") + "'" + li.Text + "'";
+                    tmp += (tmp.Length > 0 ? "," : "") + "'" + d + "'";
                 }
+                //_mod = tmp;
             }
-            if (!string.IsNullOrEmpty(_mod))
+            catch
+            {
+                _mod = "";
+            }
+            //foreach (ListItem li in cbMod.Items)
+            //{
+            //    if (li.Selected)
+            //    {
+            //        _mod += (string.IsNullOrEmpty(_mod) ? "" : ",") + "'" + li.Text + "'";
+            //    }
+            //}
+            if (!string.IsNullOrEmpty(tmp))
             {
                 where = !string.IsNullOrEmpty(where) ? " and " : " where ";
                 sql += where;
-                sql += " Modality in (" + _mod + ")";
+                sql += " Modality in (" + tmp + ")";
             }
 
             return sql;
@@ -204,7 +228,7 @@ namespace UNEOPACS2.Study
             sql = "SELECT      dbo.MediaStudyLevel.PatientID,dbo.MediaStudyLevel.StudyInstanceUid, dbo.MediaStudyLevel.StudyDate, dbo.MediaStudyLevel.StudyTime,";
             sql += "dbo.MediaStudyLevel.PatientsName, dbo.MediaStudyLevel.PatientsSex, dbo.MediaStudyLevel.AccessionNumber, dbo.MediaStudyLevel.Modality,";
             sql += "dbo.MediaStudyLevel.Media_Type, dbo.MediaStudyLevel.Path, dbo.MediaStudyLevel.NumberOfStudyRelatedSeries,";
-            sql += "dbo.MediaStudyLevel.NumberOfStudyRelatedInstances, dbo.MediaStudyLevel.ReferringPhysiciansName,dbo.MediaStudyLevel.StudyDescription, dbo.StudyReport.ondate";
+            sql += "dbo.MediaStudyLevel.NumberOfStudyRelatedInstances, dbo.MediaStudyLevel.ReferringPhysiciansName,dbo.MediaStudyLevel.StudyDescription, dbo.StudyReport.ondate,dbo.StudyReport.normal as rpStatus";
             sql += ",dbo.MediaStudyLevel.Path as urlview FROM dbo.MediaStudyLevel LEFT OUTER JOIN dbo.StudyReport ON ";
             sql += " dbo.MediaStudyLevel.StudyInstanceUid = dbo.StudyReport.StudyInstanceUid";
 
@@ -235,15 +259,15 @@ namespace UNEOPACS2.Study
                 sql += "StudyDescription like '%" + txtDesc.Text + "%'";
                 mod++;
             }
-            if (txtDoc.Text.Length > 0)
-            {
-                if (mod == 0)
-                    sql += " where ";
-                else
-                    sql += " and ";
-                sql += "ReferringPhysiciansName like '%" + txtDoc.Text + "%'";
-                mod++;
-            }
+            //if (txtDoc.Text.Length > 0)
+            //{
+            //    if (mod == 0)
+            //        sql += " where ";
+            //    else
+            //        sql += " and ";
+            //    sql += "ReferringPhysiciansName like '%" + txtDoc.Text + "%'";
+            //    mod++;
+            //}
             if (txtDt1.Text.Length > 0 && txtDt2.Text.Length > 0)
             {
                 if (mod == 0)
@@ -276,6 +300,7 @@ namespace UNEOPACS2.Study
                     dr["StudyDescription"] = r["StudyDescription"];
                     dr["ondate"] = r["ondate"];
                     dr["urlview"] = r["urlview"];
+                    dr["rpStatus"] = r["rpStatus"];
                     db.ds.Tables["study"].Rows.Add(dr);
                     db.ds.Tables["study"].AcceptChanges();
                     //db.connClose();
@@ -284,8 +309,7 @@ namespace UNEOPACS2.Study
             }
 
         }
-
-        protected void find()
+        public void find()
         {
             db.daFill(sqlPacs(), "study");
             if (_mod.IndexOf("MD") > -1)
@@ -315,13 +339,22 @@ namespace UNEOPACS2.Study
             find();
         }
 
-
-        [WebMethod]
-        public static string getReport(string stuid=null)
+        protected void bnNormal_Click(object sender, EventArgs e)
         {
-            //Send message
-            var res = stuid;
-            return res;
+            //string sql;
+            //sql = "insert into studyreport(studyinstanceuid,normal,comment,ondate,doctor)";
+            //sql += " values('" + txtStuid.Value +"',true,'" + txtMemmo.Value + "','" + DateTime.Now.ToString("yyyyMMdd",uIE) + "','" + Session["fullname"] + "'";
+            //db.sqlCmd(sql);
         }
+        public string selectMod(string mod)
+        {
+            if (!string.IsNullOrEmpty(_mod))
+                if (_mod.IndexOf(mod) > -1)
+                {
+                    return "selected=\"selected\"";
+                }
+            return "";
+        }
+
     }
 }
