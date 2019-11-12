@@ -189,34 +189,34 @@ namespace UNEOPACS2.Study
             //}
             // modality
             _mod = "";
-            string tmp = "";
-            try
-            {
-                _mod = Page.Request.Form["msMod"].ToString() ?? "";
-                string[] m = _mod.Split(',');
-
-                foreach (string d in m)
-                {
-                    tmp += (tmp.Length > 0 ? "," : "") + "'" + d + "'";
-                }
-                //_mod = tmp;
-            }
-            catch
-            {
-                _mod = "";
-            }
-            //foreach (ListItem li in cbMod.Items)
+            //string tmp = "";
+            //try
             //{
-            //    if (li.Selected)
+            //    _mod = Page.Request.Form["msMod"].ToString() ?? "";
+            //    string[] m = _mod.Split(',');
+
+            //    foreach (string d in m)
             //    {
-            //        _mod += (string.IsNullOrEmpty(_mod) ? "" : ",") + "'" + li.Text + "'";
+            //        tmp += (tmp.Length > 0 ? "," : "") + "'" + d + "'";
             //    }
+            //    //_mod = tmp;
             //}
-            if (!string.IsNullOrEmpty(tmp))
+            //catch
+            //{
+            //    _mod = "";
+            //}
+            foreach (ListItem li in cbMod.Items)
+            {
+                if (li.Selected)
+                {
+                    _mod += (string.IsNullOrEmpty(_mod) ? "" : ",") + "'" + li.Text + "'";
+                }
+            }
+            if (!string.IsNullOrEmpty(_mod))
             {
                 where = !string.IsNullOrEmpty(where) ? " and " : " where ";
                 sql += where;
-                sql += " Modality in (" + tmp + ")";
+                sql += " Modality in (" + _mod + ")";
             }
 
             return sql;

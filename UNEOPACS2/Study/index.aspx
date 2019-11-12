@@ -1,106 +1,10 @@
 ﻿<%@ Page Title="UNEO2.0:Study" Language="C#" MasterPageFile="~/uneo.Master" AutoEventWireup="true" CodeBehind="index.aspx.cs" Inherits="UNEOPACS2.Study.index" Debug="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link href="../Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="../Scripts/bootstrap-multiselect-dropdown/css/bootstrap-multiselect.css" rel="stylesheet" />
-
-    <script src="../Scripts/jquery-3.4.1.js"></script>
-    <%--<script src="../Scripts/bootstrap.min.js"></script>--%>
-    <script src="../Scripts/bootstrap.bundle.js"></script>
-    <script src="../Scripts/popper.js"></script>
-
-    <script src="../Scripts/bootstrap-multiselect-dropdown/js/bootstrap-multiselect.js"></script>
-    <style type="text/css">
-        #msMod .checkbox-list > li > a {
-            display: block;
-            padding: 3px 0;
-            clear: both;
-            font-weight: normal;
-            line-height: 1.42857143;
-            color: #333;
-            white-space: nowrap;
-        }
-
-            #msMod .checkbox-list > li > a:hover,
-            #msMod .checkbox-list > li > a:focus {
-                color: #333;
-                text-decoration: none;
-                background-color: transparent;
-            }
-
-        #msMod .checkbox-list > .active > a,
-        #msMod .checkbox-list > .active > a:hover,
-        #msMod .checkbox-list > .active > a:focus {
-            color: #333;
-            text-decoration: none;
-            background-color: transparent;
-            outline: 0;
-        }
-
-        #msMod .checkbox-list > .disabled > a,
-        #msMod .checkbox-list > .disabled > a:hover,
-        #msMod .checkbox-list > .disabled > a:focus {
-            color: #777;
-        }
-
-            #msMod .checkbox-list > .disabled > a:hover,
-            #msMod .checkbox-list > .disabled > a:focus {
-                text-decoration: none;
-                cursor: unset;
-                background-color: transparent;
-                background-image: none;
-                filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-            }
-
-        #msMod .checkbox-list > li > a > label {
-            padding: 3px 0 3px 20px;
-        }
-
-        @media (min-width: 768px) {
-            #msMod .checkbox-list > li {
-                float: left;
-                width: 33%;
-            }
-
-            #msMod .checkbox-list-vertical > li {
-                float: none;
-                width: 100%;
-            }
-        }
-
-        #msMod .multiselect-container.checkbox-list {
-            position: static;
-        }
-    </style>
-    <select id="msMod" name="msMod" multiple="multiple">
-        <option value="CR">CR</option>
-        <option value="DX">DX</option>
-        <option value="CT">CT</option>
-        <option value="MR">MR</option>
-        <option value="US">US</option>
-        <option value="NM">NM</option>
-        <option value="XA">XA</option>
-        <option value="MG">MG</option>
-        <option value="CS">CS</option>
-        <option value="MD">MD</option>
-    </select>
-
-    <script type="text/javascript">
-        $(function () {
-            $('#msMod').multiselect({
-                buttonContainer: '<div id="example-checkbox-list-container"></div>',
-                buttonClass: '',
-                templates: {
-                    button: '',
-                    ul: '<ul class="multiselect-container checkbox-list"></ul>',
-                }
-            });
-        });
-    </script>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <link href="../Content/bootstrap.min.css" rel="stylesheet" />
+    <%--<link href="../Content/bootstrap.min.css" rel="stylesheet" />--%>
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
     <link href="../Content/bootstrap-grid.min.css" rel="stylesheet" />
     <%--<link href="../Content/bootstrap-select.css" rel="stylesheet" />--%>
 
@@ -113,8 +17,9 @@
     <link href="../Scripts/bootstrap-multiselect-dropdown/css/bootstrap-multiselect.css" rel="stylesheet" />
 
     <script src="../Scripts/jquery-3.4.1.js"></script>
-    <%--<script src="../Scripts/bootstrap.min.js"></script>--%>
-    <script src="../Scripts/bootstrap.bundle.js"></script>
+    <script src="../Scripts/bootstrap.js"></script>
+    <%--    <script src="../Scripts/bootstrap.min.js"></script>--%>
+    <%--<script src="../Scripts/bootstrap.bundle.js"></script>--%>
     <script src="../Scripts/popper.js"></script>
 
     <script src="../Scripts/bootstrap-multiselect-dropdown/js/bootstrap-multiselect.js"></script>
@@ -132,10 +37,10 @@
 
         <asp:ScriptManager ID="ScriptManager1" runat="server">
         </asp:ScriptManager>
-        <div class="cloudy-knoxville-gradient">
+        <div class="cloudy-knoxville-gradient shadow-sm">
             <asp:UpdatePanel runat="server" ID="UpdatePanel1">
                 <ContentTemplate>
-                    <div class="rgba-cyan-slight">
+                    <div class=" teal lighten-5 shadow-sm">
                         <div class="form-group">
                             <div class="container">
                                 <div class="row">
@@ -171,13 +76,9 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="btn btn-amber mb-4">
-                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                            <asp:Button ID="bnToday" runat="server" BackColor="Transparent" BorderWidth="0" Text="วันนี้" OnClick="bnToday_Click" CssClass="text-light font-weight-bold" />
-                                        </div>
-                                        <div class="btn btn-deep-orange mb-4">
-                                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            <asp:Button ID="bnYesterday" runat="server" Text="เมื่อวาน" BackColor="Transparent" BorderWidth="0" OnClick="bnYesterday_Click" CssClass="text-light font-weight-bold" />
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <asp:Button ID="bnToday" runat="server" BackColor="Transparent" BorderWidth="0" Text="วันนี้" OnClick="bnToday_Click" CssClass="btn btn-indigo font-weight-bold" />
+                                            <asp:Button ID="bnYesterday" runat="server" Text="เมื่อวาน" BackColor="Transparent" BorderWidth="0" OnClick="bnYesterday_Click" CssClass="btn btn-mdb-color font-weight-bold" />
                                         </div>
                                     </div>
                                     <script>
@@ -198,14 +99,25 @@
                                         </div>
                                     </div>
                                     <div class="col-4">
+                                        <ul id="check-list-box" class="list-group checked-list-box border-0">
+                                            <li class="list-group-item bg-transparent border-0">
+                                                <asp:CheckBoxList ID="cbMod" runat="server" RepeatDirection="Horizontal">
+                                                    <asp:ListItem Text="CR" Value="CR"></asp:ListItem>
+                                                    <asp:ListItem Text="DX" Value="DX"></asp:ListItem>
+                                                    <asp:ListItem Text="MR" Value="MR"></asp:ListItem>
+                                                    <asp:ListItem Text="US" Value="US"></asp:ListItem>
+                                                    <asp:ListItem Text="NM" Value="NM"></asp:ListItem>
+                                                    <asp:ListItem Text="XA" Value="XA"></asp:ListItem>
+                                                    <asp:ListItem Text="MG" Value="MG"></asp:ListItem>
+                                                    <asp:ListItem Text="CS" Value="CS"></asp:ListItem>
+                                                    <asp:ListItem Text="MD" Value="MD"></asp:ListItem>
+                                                </asp:CheckBoxList></li>
+                                        </ul>
                                     </div>
 
                                     <div class="col-lg-4">
+                                        <asp:Button ID="bnFind" runat="server" Text="ค้นหา" BackColor="Transparent" BorderWidth="0" OnClick="bnFind_Click" CssClass="btn btn-dark-green mb-4 text-light font-weight-bold bnfind" />
 
-                                        <div class="btn btn-dark-green mb-4">
-                                            <i class="fa fa-search" aria-hidden="true"></i>
-                                            <asp:Button ID="bnFind" runat="server" Text="ค้นหา" BackColor="Transparent" BorderWidth="0" OnClick="bnFind_Click" CssClass="text-light font-weight-bold bnfind" />
-                                        </div>
                                         <script>
                                             $(function () {
                                                 $(document).on("click", ".bnfind", function () {
@@ -244,7 +156,7 @@
             </asp:UpdateProgress>
             <asp:UpdatePanel runat="server" ID="upStudy">
                 <ContentTemplate>
-                    <table id="tbStudy" class="uk-table uk-table-hover uk-table-striped" cellspacing="0" style="width: 100%">
+                    <table id="tbStudy" class="uk-table uk-table-hover uk-table-striped " cellspacing="0" style="width: 100%">
                         <thead>
                             <tr>
                                 <th>HN</th>
@@ -339,7 +251,7 @@
             </asp:UpdatePanel>
         </div>
     </div>
-    
+
 
 
     <!-- Modal report -->
@@ -427,10 +339,10 @@
         </div>
 
     </div>
-    
+
     <!-- Modal Popup -->
 
-<script>
+    <script>
 
         function addreport(stid, memo, normal) {
             var webMethod = window.location.origin + "/service/report.asmx/addReport";
@@ -618,9 +530,9 @@
                         language: 'th-th', format: 'dd/mm/yyyy', todayBtn: "linked",
                         todayHighlight: true
                     })
-                    $('#msMod').multiselect({
-                        includeSelectAllOption: true
-                    });
+                    //$('.msMod').multiselect({
+                    //    includeSelectAllOption: true
+                    //});
 
 <%--                    $(document).on("click", ".bnfind", function () {
                         var id = $("#<%= txtID.ClientID %>").val();
@@ -674,6 +586,6 @@
                     }
                 });
         }
-</script>
+    </script>
 
 </asp:Content>
