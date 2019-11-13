@@ -4,6 +4,8 @@ using System.Globalization;
 using System.Web.UI.WebControls;
 using System.Web.Services;
 using System.Web.Script.Services;
+using Ionic.Zip;
+using System.IO;
 
 namespace UNEOPACS2.Study
 {
@@ -354,6 +356,57 @@ namespace UNEOPACS2.Study
                     return "selected=\"selected\"";
                 }
             return "";
+        }
+
+
+        /// DCM
+        /// 
+        public string GetDCM(string stuid)
+        {
+            string sql;
+            sql = "SELECT dbo.Study.StudyDate, dbo.Study.StudyTime, dbo.Study.StudyId, dbo.Filesystem.FilesystemPath, dbo.ServerPartition.PartitionFolder, dbo.FilesystemStudyStorage.StudyFolder, dbo.Study.StudyInstanceUid";
+            sql += " FROM dbo.Study INNER JOIN  ";
+            sql += " dbo.FilesystemStudyStorage ON dbo.Study.StudyStorageGUID = dbo.FilesystemStudyStorage.StudyStorageGUID INNER JOIN ";
+            sql += " dbo.Filesystem ON dbo.FilesystemStudyStorage.FilesystemGUID = dbo.Filesystem.GUID INNER JOIN ";
+            sql += " dbo.ServerPartition ON dbo.Study.ServerPartitionGUID = dbo.ServerPartition.GUID";
+            sql += " where dbo.Study.StudyInstanceUid='" + stuid + "'";
+            db.daFill(sql, "dcm");
+            if (db.ds.Tables["dcm"].Rows.Count>0)
+            {
+                DataRow dr = db.ds.Tables["dcm"].Rows[0];
+                return dr["FilesystemPath"].ToString() + "\\" + dr["PartitionFolder"].ToString() + "\\" + dr["StudyFolder"].ToString() + "\\" + dr["StudyInstanceUid"].ToString();
+            }
+            return "";
+        }
+
+        public void DownloadFiles(string stuid)
+        {
+            string filepath=GetDCM(stuid);
+            if (string.IsNullOrEmpty(filepath))
+            {
+                using (ZipFile zip = new ZipFile())
+                {
+                    zip.AlternateEncodingUsage = ZipOption.AsNecessary;
+
+                    zip.AddDirectory(filepath);
+  
+                    //foreach (GridViewRow row in GridView1.Rows)
+                    //{
+                    //    if ((row.FindControl("chkSelect") as CheckBox).Checked)
+                    //    {
+                    //        string filePath = (row.FindControl("lblFilePath") as Label).Text;
+                    //        zip.AddFile(filePath, "Files");
+                    //    }
+                    //}
+                    Response.Clear();
+                    Response.BufferOutput = false;
+                    string zipName = String.Format("Zip_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"));
+                    Response.ContentType = "application/zip";
+                    Response.AddHeader("content-disposition", "attachment; filename=" + zipName);
+                    zip.Save(Response.OutputStream);
+                    Response.End();
+                }
+            }
         }
 
     }

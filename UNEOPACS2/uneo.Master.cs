@@ -16,7 +16,7 @@ namespace UNEOPACS2
         {
             if (Session["login"]==null)
             {
-                Response.Redirect("/login.aspx");
+                Response.Redirect("~/login.aspx");
             }
 
            ins= Properties.Settings.Default.HOSPITAL_NAME;
@@ -26,7 +26,7 @@ namespace UNEOPACS2
         protected void lbLogoff_Click(object sender, EventArgs e)
         {
             Session.RemoveAll();
-            Response.Redirect("/login.aspx");
+            Response.Redirect("~/login.aspx");
         }
         protected void bncpAdd_Click(object sender, EventArgs e)
         {
