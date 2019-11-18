@@ -17,9 +17,12 @@
       <asp:Label ID="lbTitle" runat="server" Text="Title"></asp:Label>
   </div>
   <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
+    <h5 class="card-title">
+        <asp:Label ID="lbInfo" runat="server" Text="lbInfo"></asp:Label>
+      </h5>
     <p class="card-text">
-        <asp:Label ID="lbFile" runat="server" Text="lbFile"></asp:Label>
+        <h4>DICOM File</h4>
+        <asp:Label ID="lbFile" runat="server"></asp:Label>
       </p>
       <br />
       <asp:Button ID="bnDownload" runat="server" OnClick="bnDownload_Click" Text="Download" />

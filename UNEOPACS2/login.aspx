@@ -29,6 +29,7 @@
     <script src="Scripts/Login_v20/vendor/daterangepicker/daterangepicker.js"></script>
     <script src="Scripts/Login_v20/vendor/countdowntime/countdowntime.js"></script>
     <script src="Scripts/Login_v20/js/main.js"></script>
+    <script src="Scripts/getBrowser.js"></script>
 
 </head>
 <body>
@@ -56,13 +57,13 @@
 
                     <div class="wrap-input100 rs1 validate-input" data-validate="Username is required">
                         <asp:TextBox ID="txtUser" runat="server" CssClass="input100"></asp:TextBox>
-                        <span class="label-input100">User name</span>
+                        <span class="label-input100"><i class="fa fa-user" aria-hidden="true"></i></span>
                     </div>
 
 
                     <div class="wrap-input100 rs2 validate-input" data-validate="Password is required">
                         <asp:TextBox ID="txtPass" runat="server" CssClass="input100" TextMode="Password"></asp:TextBox>
-                        <span class="label-input100">Password</span>
+                        <span class="label-input100"><i class="fa fa-key" aria-hidden="true"></i></span>
                     </div>
 
                     <div class="container-login100-form-btn">
@@ -78,6 +79,9 @@
                         </div>
                         <div class="text-center w-full p-t-23">
                             <asp:Label ID="lbAbount" runat="server" Text="."></asp:Label>
+                            <div align="right">
+                                <img src="media/gd4_Small.png" width="50" height="38" />
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -180,6 +184,11 @@
 
 
     <script type="text/javascript"> 
+        $(function () {
+            if (!jQuery.browser.msie) {
+                alert('UNEO รองรับการใช้งานบน Microsoft Internet Explorer IE. เท่านั้น');
+            }
+        });
 
         function ShowPopup(title, body) {
             $("#MyPopup .modal-title").html(title);

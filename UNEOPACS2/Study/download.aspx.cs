@@ -18,8 +18,20 @@ namespace UNEOPACS2.Study
         public static CConnect db;
         protected void Page_Load(object sender, EventArgs e)
         {
-            lbTitle.Text= Request["stuid"];
+            lbTitle.Text = Request["stuid"];
+            lbInfo.Text = Request["hn"] + " " + Request["name"] + " " + Request["desc"] + " " + Request["dt"];
+
+            List<string> filepath = GetFile(lbTitle.Text);
+            if (filepath.Count > 0)
+            {
+                foreach (string f in filepath)
+                {
+                    FileInfo fi = new FileInfo(f);
+                    lbFile.Text += fi.Name + "\n";
+                }
+            }
         }
+
 
         /// DCM
         /// 
@@ -38,7 +50,7 @@ namespace UNEOPACS2.Study
             {
                 DataRow dr = db.ds.Tables["dcm"].Rows[0];
                 string tmp;
-                tmp=  dr["FilesystemPath"].ToString() +"\\" + @dr["PartitionFolder"].ToString() + "\\" + dr["StudyFolder"].ToString() + "\\" + dr["StudyInstanceUid"].ToString() + "\\";
+                tmp = dr["FilesystemPath"].ToString() + "\\" + @dr["PartitionFolder"].ToString() + "\\" + dr["StudyFolder"].ToString() + "\\" + dr["StudyInstanceUid"].ToString() + "\\";
                 return tmp;//.Replace("\\", "/");
             }
             return "";
@@ -46,40 +58,38 @@ namespace UNEOPACS2.Study
 
         private List<string> GetFile(string stuid)
         {
-            string filepath =@"" + (new Uri(GetDCM(stuid))).AbsolutePath;// "~\\" + GetDCM(stuid);
+            string filepath = @"" + (new Uri(GetDCM(stuid))).AbsolutePath;// "~\\" + GetDCM(stuid);
             List<string> tmp = new List<string>();
             string[] folders = Directory.GetDirectories(@filepath, "*", System.IO.SearchOption.AllDirectories);
-            foreach(string fd in folders)
+            foreach (string fd in folders)
             {
                 string[] files = Directory.GetFiles(fd);
-                foreach(string f in files)
+                foreach (string f in files)
                 {
                     FileInfo fi = new FileInfo(f);
                     tmp.Add(fi.FullName);
                 }
             }
             return tmp;
-        }  
+        }
         public void DownloadFiles(string stuid)
         {
             List<string> filepath = GetFile(stuid);
 
-            if (filepath.Count>0)
+            if (filepath.Count > 0)
             {
-
-
-
                 using (ZipFile zip = new ZipFile())
                 {
                     zip.AlternateEncodingUsage = ZipOption.AsNecessary;
-                    zip.AddDirectoryByName("Files");
+                    zip.AddDirectoryByName("DCM");
                     foreach (string f in filepath)
                     {
-                            zip.AddFile(f, "Files");
+                 
+                        zip.AddFile(f, "DCM");
                     }
                     Response.Clear();
                     Response.BufferOutput = false;
-                    string zipName = String.Format("Zip_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"));
+                    string zipName = String.Format("DCM {0}.zip", Request["hn"] + "-"+ DateTime.Now.ToString("yyyy-MM-dd-HHmmss",uIE));
                     Response.ContentType = "application/zip";
                     Response.AddHeader("content-disposition", "attachment; filename=" + zipName);
                     zip.Save(Response.OutputStream);

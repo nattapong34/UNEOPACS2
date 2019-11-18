@@ -11,8 +11,8 @@ namespace UNEOPACS2.Study
 {
     public partial class index : System.Web.UI.Page
     {
-        CultureInfo uIE = new System.Globalization.CultureInfo("en-US");
-        CultureInfo uTH = new System.Globalization.CultureInfo("th-TH");
+       public CultureInfo uIE = new System.Globalization.CultureInfo("en-US");
+        public CultureInfo uTH = new System.Globalization.CultureInfo("th-TH");
         public static CConnect db;
         private static string _mod;
         protected void Page_Load(object sender, EventArgs e)
@@ -22,20 +22,54 @@ namespace UNEOPACS2.Study
                 db = new CConnect();
             }
         }
-        public string string2date(string dt)
+        public string string2date(string dd, bool th = true)
+        {   
+            try
+            {
+                DateTime d = DateTime.ParseExact(dd, "dd/MM/yyyy", th ? uTH : CultureInfo.InvariantCulture);
+                return d.ToString("yyyyMMdd",uIE);
+            }
+            catch
+            {
+                string d, m, y;
+                d = dd.Substring(0, 2);
+                m = dd.Substring(3, 2);
+                y = dd.Substring(6, 4);
+                if (int.Parse(y) > 2500)
+                    y = (int.Parse(y) - 543).ToString();
+                return y + m + d;
+            }
+        }
+        public string formatDateEN2TH(string dd)
         {
-            string d, m, y;
-            d = dt.Substring(0, 2);
-            m = dt.Substring(3, 2);
-            y = dt.Substring(6, 4);
-            return y + m + d;
+            try
+            {
+                DateTime d = DateTime.ParseExact(dd, "dd/MM/yyyy", uIE);
+                return d.ToString("dd/MM/yyyy", uTH);
+            }
+            catch
+            {
+                return dd;
+            }
         }
         public string formatDate(string dd, bool th = false)
         {
             try
             {
                 DateTime d = DateTime.ParseExact(dd, "yyyyMMdd", th ? uTH : CultureInfo.InvariantCulture);
-                return d.ToString("dd/MM/yyyy");
+                return d.ToString("dd/MM/yyyy",uTH);
+            }
+            catch
+            {
+                return dd;
+            }
+        }
+        public string formatDateTime(string dd)
+        {
+            try
+            {
+                DateTime d = DateTime.ParseExact(dd, "dd/MM/yyyy HH:mm:ss",uIE);
+                return d.ToString("dd/MM/yyyy  HH:mm:ss",uTH);
             }
             catch
             {
@@ -329,15 +363,15 @@ namespace UNEOPACS2.Study
 
         protected void bnYesterday_Click(object sender, EventArgs e)
         {
-            txtDt1.Text = DateTime.Now.AddDays(-1).ToString("dd/MM/yyyy");
-            txtDt2.Text = DateTime.Now.AddDays(-1).ToString("dd/MM/yyyy");
+            txtDt1.Text = DateTime.Now.AddDays(-1).ToString("dd/MM/yyyy",uTH);
+            txtDt2.Text = DateTime.Now.AddDays(-1).ToString("dd/MM/yyyy",uTH);
             find();
         }
 
         protected void bnToday_Click(object sender, EventArgs e)
         {
-            txtDt1.Text = DateTime.Now.ToString("dd/MM/yyyy");
-            txtDt2.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            txtDt1.Text = DateTime.Now.ToString("dd/MM/yyyy",uTH);
+            txtDt2.Text = DateTime.Now.ToString("dd/MM/yyyy",uTH);
             find();
         }
 

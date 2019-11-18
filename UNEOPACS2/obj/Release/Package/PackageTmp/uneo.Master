@@ -21,28 +21,38 @@
 
 </head>
 <body>
+    <style>
+        .nbTop {
+            background-image: linear-gradient(to right, #267689, #1f6982, #1d5b79, #204e6f, #234164);
+        }
+    </style>
     <form id="form1" runat="server">
 
-        <nav class="navbar navbar-light default-color-dark">
+        <nav class="navbar nbTop">
             <a class="navbar-brand" href="#">
                 <img src="../media/uneo.png" height="30" class="d-inline-block align-top" alt="" />
                 <span class="text-white"><%= ins %></span></a>
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-user-o" aria-hidden="true"></i><span class="text-white"><%=Session["fullname"].ToString() %> </span>
+                    <i class="fa fa-user-circle-o"></i>&nbsp;<span class="text-white"><%=Session["fullname"].ToString() %> </span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a href="" data-toggle="modal" data-target="#mdChangepass"><i class="fa fa-key" aria-hidden="true"></i>เปลี่ยนรหัสผ่าน</a>
                     <div class="dropdown-divider"></div>
+                    <% if (int.Parse(Session["usertype"].ToString()) == 2)
+                        { %>
+                    <a href="../admin/user.aspx" target="_blank"><i class="fa fa-users" aria-hidden="true"></i>จัดการผู้ใช้งาน</a>
+                    <div class="dropdown-divider"></div>
+                    <%} %>
                     <asp:LinkButton ID="LinkButton1" runat="server" CssClass="dropdown-item" OnClick="lbLogoff_Click"><i class="fa fa-sign-out" aria-hidden="true"></i>Logoff</asp:LinkButton>
                 </div>
             </li>
         </nav>
 
         <%--modal changepass--%>
-            <asp:ContentPlaceHolder ID="head" runat="server">
-            </asp:ContentPlaceHolder>
+        <asp:ContentPlaceHolder ID="head" runat="server">
+        </asp:ContentPlaceHolder>
 
         <div class="modal fade" id="mdChangepass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -76,7 +86,7 @@
             <div>
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
 
-<%--
+
 
                     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
                     <script src="~/Scripts/bootstrap.min.js"></script>
@@ -86,7 +96,9 @@
 
 
                     <script src="~/Scripts/Login_v1/vendor/select2/select2.min.js"></script>
-                    <script src="~/Scripts/Login_v1/vendor/tilt/tilt.jquery.min.js"></script>--%>
+                    <script src="~/Scripts/Login_v1/vendor/tilt/tilt.jquery.min.js"></script>
+
+
                 </asp:ContentPlaceHolder>
             </div>
 
@@ -112,6 +124,11 @@
 
             <!-- Modal Popup -->
             <script>
+                function OpenPopupCenter(pageURL, title, w, h) {
+                    var left = (screen.width - w) / 2;
+                    var top = (screen.height - h) / 4;  // for 25% - devide by 4  |  for 33% - devide by 3
+                    var targetWin = window.open(pageURL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+                }
                 function ShowPopup(title, body) {
                     $("#MyPopup .modal-title").html(title);
                     $("#MyPopup .modal-body").html(body);
@@ -122,5 +139,5 @@
         </div>
     </form>
 </body>
-    
+
 </html>

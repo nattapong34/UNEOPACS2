@@ -30,6 +30,30 @@
     <script src="../Scripts/MDB-Free_4.8.10/js/mdb.min.js"></script>
     <script src="../Scripts/jquery.confirm.min.js"></script>
     <script src="../Scripts/tinymce/tinymce.min.js"></script>
+     <script src="../Scripts/getBrowser.js"></script>
+    <style>
+        .btn {
+            border-radius: 10px;
+            position: -webkit-sticky; /* Safari */
+            position: sticky;
+        }
+
+        .table-striped > tbody > tr:nth-of-type(2n+1),
+        .table-striped > tbody > tr.odd {
+            background-color: #f1f8e9;
+        }
+
+        .table-striped > tbody > tr.even {
+            background-color: #FFF;
+        }
+
+        .table-hover tbody tr:hover td {
+            background: #c6ff00;
+        }
+        .pnSearch{
+background-image: linear-gradient(to top, #f2f2f2, #f1f1f3, #eff1f4, #ecf1f5, #e9f1f6, #e9f1f6, #eaf1f7, #eaf1f7, #eef2f7, #f1f3f6, #f3f4f6, #f5f5f5);
+        }
+    </style>
 
 
 
@@ -40,7 +64,7 @@
         <div class="cloudy-knoxville-gradient shadow-sm">
             <asp:UpdatePanel runat="server" ID="UpdatePanel1">
                 <ContentTemplate>
-                    <div class=" teal lighten-5 shadow-sm">
+                    <div class="shadow-sm pnSearch">
                         <div class="form-group">
                             <div class="container">
                                 <div class="row">
@@ -76,34 +100,23 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                            <asp:Button ID="bnToday" runat="server" BackColor="Transparent" BorderWidth="0" Text="วันนี้" OnClick="bnToday_Click" CssClass="btn btn-indigo font-weight-bold" />
-                                            <asp:Button ID="bnYesterday" runat="server" Text="เมื่อวาน" BackColor="Transparent" BorderWidth="0" OnClick="bnYesterday_Click" CssClass="btn btn-mdb-color font-weight-bold" />
-                                        </div>
-                                    </div>
-                                    <script>
-                                        $(function () {
-                                            $('.input-daterange').datepicker({
-                                                language: 'th-th', format: 'dd/mm/yyyy', todayBtn: "linked",
-                                                todayHighlight: true
-                                            })
-                                        });
-                                    </script>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-4">
                                         <div class="md-form">
                                             <asp:TextBox ID="txtDesc" runat="server" CssClass="form-control"></asp:TextBox>
                                             <label for="txtDesc">รายการ</label>
                                         </div>
                                     </div>
+
+
+                                </div>
+                                <div class="row">
+
                                     <div class="col-4">
                                         <ul id="check-list-box" class="list-group checked-list-box border-0">
                                             <li class="list-group-item bg-transparent border-0">
                                                 <asp:CheckBoxList ID="cbMod" runat="server" RepeatDirection="Horizontal">
                                                     <asp:ListItem Text="CR" Value="CR"></asp:ListItem>
                                                     <asp:ListItem Text="DX" Value="DX"></asp:ListItem>
+                                                     <asp:ListItem Text="CT" Value="CT"></asp:ListItem>
                                                     <asp:ListItem Text="MR" Value="MR"></asp:ListItem>
                                                     <asp:ListItem Text="US" Value="US"></asp:ListItem>
                                                     <asp:ListItem Text="NM" Value="NM"></asp:ListItem>
@@ -115,32 +128,39 @@
                                         </ul>
                                     </div>
 
-                                    <div class="col-lg-4">
-                                        <asp:Button ID="bnFind" runat="server" Text="ค้นหา" BackColor="Transparent" BorderWidth="0" OnClick="bnFind_Click" CssClass="btn btn-dark-green mb-4 text-light font-weight-bold bnfind" />
-
-                                        <script>
-                                            $(function () {
-                                                $(document).on("click", ".bnfind", function () {
-                                                    var id = $("#<%= txtID.ClientID %>").val();
-                                                    var name = $("#<%= txtName.ClientID %>").val();
-                                                    var dt1 = $("#<%= txtDt1.ClientID %>").val();
-                                                    var dt2 = $("#<%= txtDt2.ClientID %>").val();
-                                                    var desc = $("#<%= txtDesc.ClientID %>").val();
-
-                                                    if (id.length == 0 && name.length == 0 && dt1.length == 0 && dt2.length == 0 && desc.length == 0) {
-                                                        //ConfirmDialog('กรุณายืนยันการค้นหาแบบไม่มีเงื่อนไข<br>ระบบจะประมวลผลช้า เนื่องจากแสดงรายการทั้งหมด');
-                                                        if (confirm("ต้องการค้นหาแบบไม่มีเงื่อนไข?\nข้อมูลจะถูกแสดงทั้งหมด!! กรุณายืนยัน")) {
-                                                            return true;
-                                                        }
-                                                        else {
-                                                            return false;
-                                                        }
-                                                    }
-                                                });
-                                            });
-
-                                        </script>
+                                    <div class="col align-self-end">
+                                        <asp:Button ID="bnToday" runat="server" Text="วันนี้" OnClick="bnToday_Click" CssClass="btn btn-indigo font-weight-bold" />
+                                        <asp:Button ID="bnYesterday" runat="server" Text="เมื่อวาน" OnClick="bnYesterday_Click" CssClass="btn btn-mdb-color font-weight-bold" />
+                                        <asp:Button ID="bnFind" runat="server" Text="ค้นหา" OnClick="bnFind_Click" CssClass="btn btn-dark-green  font-weight-bold bnfind" />
                                     </div>
+                                    <script>
+                                        $(function () {
+                                            $(document).on("click", ".bnfind", function () {
+                                                var id = $("#<%= txtID.ClientID %>").val();
+                                                var name = $("#<%= txtName.ClientID %>").val();
+                                                var dt1 = $("#<%= txtDt1.ClientID %>").val();
+                                                var dt2 = $("#<%= txtDt2.ClientID %>").val();
+                                                var desc = $("#<%= txtDesc.ClientID %>").val();
+
+                                                if (id.length == 0 && name.length == 0 && dt1.length == 0 && dt2.length == 0 && desc.length == 0) {
+                                                    //ConfirmDialog('กรุณายืนยันการค้นหาแบบไม่มีเงื่อนไข<br>ระบบจะประมวลผลช้า เนื่องจากแสดงรายการทั้งหมด');
+                                                    if (confirm("ต้องการค้นหาแบบไม่มีเงื่อนไข?\nข้อมูลจะถูกแสดงทั้งหมด!! กรุณายืนยัน")) {
+                                                        return true;
+                                                    }
+                                                    else {
+                                                        return false;
+                                                    }
+                                                }
+                                            });
+                                        });
+
+                                        $(function () {
+                                            $('.input-daterange').datepicker({
+                                                language: 'th-th', format: 'dd/mm/yyyy', todayBtn: "linked",
+                                                todayHighlight: true
+                                            })
+                                        });
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -156,8 +176,8 @@
             </asp:UpdateProgress>
             <asp:UpdatePanel runat="server" ID="upStudy">
                 <ContentTemplate>
-                    <table id="tbStudy" class="uk-table uk-table-hover uk-table-striped " cellspacing="0" style="width: 100%">
-                        <thead>
+                    <table id="tbStudy" class="table table-hover table-striped mb-0" cellspacing="0" style="width: 100%">
+                        <thead class="mdb-color darken-3 white-text">
                             <tr>
                                 <th>HN</th>
                                 <th>VN</th>
@@ -169,7 +189,7 @@
                                 <th>MOD</th>
                                 <th>วันเกิด/อายุ</th>
                                 <th>แพทย์/เจ้าหน้าที่</th>
-                                <th>รายงาน</th>
+                                <th>ผล</th>
                                 <th>DCM</th>
                                 <th>ดูภาพ</th>
                             </tr>
@@ -190,7 +210,7 @@
                                     <p class="font-weight-bold"><%=formatName(dr["PatientsName"].ToString()) %></p>
                                 </td>
                                 <td>
-                                    <p class="font-weight-light"><%=formatDate(dr["StudyDate"].ToString(),true) %></p>
+                                    <p class="font-weight-light"><%=formatDate(dr["StudyDate"].ToString(), false) %></p>
                                 </td>
                                 <td>
                                     <p class="font-weight-light"><%=formatTime(dr["StudyTime"].ToString()) %></p>
@@ -205,7 +225,7 @@
                                     <p class="font-weight-bold"><%=dr["Modality"].ToString() %></p>
                                 </td>
                                 <td>
-                                    <p class="font-weight-light"><%= CalAge(dr["PatientsBirthDate"].ToString(),dr["StudyDate"].ToString()) %></p>
+                                    <p class="font-weight-light"><%= CalAge(dr["PatientsBirthDate"].ToString(), dr["StudyDate"].ToString()) %></p>
                                 </td>
                                 <td>
                                     <p class="font-weight-light"><%=dr["ReferringPhysiciansName"].ToString().Replace('^', ' ') %></p>
@@ -214,24 +234,31 @@
 
                                     <% if (string.IsNullOrEmpty(dr["ondate"].ToString()))
                                         { %>
-
+                                    <% if (bool.Parse(Session["report"].ToString()))
+                                        { %>
                                     <a data-toggle="modal" data-target="#mdReport" class="btn  btn btn-blue-grey waves-effect px-3 bnrpt"
-                                        title="เขียนรายงาน" data-id="<%=dr["StudyInstanceUid"].ToString() +"|" +dr["PatientID"].ToString()+"|" +dr["PatientsName"].ToString() +"|"+dr["StudyDescription"].ToString() +"|"+ formatDate(dr["StudyDate"].ToString())  +"|"+ formatTime(dr["StudyTime"].ToString()) %>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                        title="เขียนรายงาน" data-id="<%=dr["StudyInstanceUid"].ToString() + "|" + dr["PatientID"].ToString() + "|" + dr["PatientsName"].ToString() + "|" + dr["StudyDescription"].ToString() + "|" + formatDate(dr["StudyDate"].ToString()) + "|" + formatTime(dr["StudyTime"].ToString()) %>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                    <%} %>
                                     <%}
                                         else
                                         { %>
 
-                                    <a data-toggle="modal" data-target="#mdReport" class="btn <%= !string.IsNullOrEmpty(dr["rpStatus"].ToString()) ?bool.Parse(dr["rpStatus"].ToString()) ? "btn-light-green":"btn-deep-orange" : "btn-deep-orange" %> px-3 bnrpt"
-                                        title="<%= !string.IsNullOrEmpty(dr["rpStatus"].ToString()) ?bool.Parse(dr["rpStatus"].ToString()) ? "ปกติ":"ผิดปกติ" : "" %>  <%= formatDate(dr["ondate"].ToString()) %>" data-id="<%=dr["StudyInstanceUid"].ToString() +"|" +dr["PatientID"].ToString()+"|" +dr["PatientsName"].ToString() +"|"+dr["StudyDescription"].ToString() +"|"+ formatDate(dr["StudyDate"].ToString())  +"|"+ formatTime(dr["StudyTime"].ToString()) %>"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
+                                    <a data-toggle="modal" data-target="#mdReport" class="btn btn-deep btn-info px-3 bnrpt"
+                                        title="บันทึกวันที่ <%= formatDateTime(dr["ondate"].ToString()) %>" data-id="<%=dr["StudyInstanceUid"].ToString() + "|" + dr["PatientID"].ToString() + "|" + dr["PatientsName"].ToString() + "|" + dr["StudyDescription"].ToString() + "|" + formatDate(dr["StudyDate"].ToString()) + "|" + formatTime(dr["StudyTime"].ToString()) %>"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
 
                                     <%} %>
                                 </td>
-                                <td><a class="btn btn-indigo" target="_blank" href="download.aspx?stuid=<%=dr["StudyInstanceUid"].ToString() %>" role="button"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
-                                <td><a class="btn btn-indigo" target="_blank" href="<%=pacsLink(dr["Modality"].ToString(),dr["urlview"].ToString()) %>" role="button"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+                                <td>
+                                    <% if (dr["Modality"].ToString() != "MD")
+                                        { %>
+                                    <button type="button" class="btn btn-deep-purple waves-effect px-3" onclick="OpenPopupCenter('download.aspx?stuid=<%=dr["StudyInstanceUid"].ToString()+"&desc="+dr["StudyDescription"].ToString() +"&hn="+dr["PatientID"].ToString() +"&name="+formatName(dr["PatientsName"].ToString()) +"&dt="+formatDate(dr["StudyDate"].ToString(), false)+"-" +formatTime(dr["StudyTime"].ToString()) %>','DICOM Download',800,400)"><i class="fa fa-download" aria-hidden="true"></i></button>
+                                    <%} %>
+                                </td>
+                                <td><a class="btn btn-mdb-color waves-effect px-3" target="_blank" href="<%=pacsLink(dr["Modality"].ToString(),dr["urlview"].ToString()) %>" role="button"><i class="fa fa-picture-o" aria-hidden="true"></i></a></td>
                             </tr>
                             <% } %>
                         </tbody>
-                        <tfoot>
+                        <tfoot class="mdb-color lighten-3 white-text">
                             <tr>
                                 <th>HN</th>
                                 <th>VN</th>
@@ -243,7 +270,7 @@
                                 <th>MOD</th>
                                 <th>วันเกิด/อายุ</th>
                                 <th>แพทย์/เจ้าหน้าที่</th>
-                                <th>รายงาน</th>
+                                <th>ผล</th>
                                 <th>DCM</th>
                                 <th>ดูภาพ</th>
                             </tr>
@@ -254,7 +281,11 @@
             </asp:UpdatePanel>
         </div>
     </div>
-
+    <footer>
+        <div align="center">
+            <img src="../media/gd4_Small.png" width="50" height="38" />
+        </div>
+    </footer>
 
 
     <!-- Modal report -->
@@ -276,7 +307,7 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="txtStuid" name="txtStuid" value="">
-                    <div id="bnCMD" align="right">
+<%--                    <div id="bnCMD" align="right">
                         <div class="row d-flex justify-content-end bnCmd">
                             <div class="btn-group" data-toggle="buttons">
 
@@ -309,7 +340,7 @@
                                 }
                             });
                         </script>
-                    </div>
+                    </div>--%>
                     <div class="form-row">
                         <div class="w-100 p-3" style="height: 500px;">
                             <textarea id="txtMemmo" name="mytextarea"> </textarea>
@@ -327,8 +358,8 @@
                                 // tinyMCE.activeEditor.setContent(content + ' ปกติ');
                                 content = tinyMCE.activeEditor.getContent();
                                 var stuid = $('#txtStuid').val();
-                                var selValue = $("input[type='radio']:checked").val();
-                                addreport(stuid, content, selValue);
+                               // var selValue = $("input[type='radio']:checked").val();
+                                addreport(stuid, content, true);
                             }
                             else {
                                 return false;
@@ -346,11 +377,20 @@
     <!-- Modal Popup -->
 
     <script>
-
+        $(function () {
+            if (!jQuery.browser.msie) {
+                alert('UNEO รองรับการใช้งานบน Microsoft Internet Explorer IE. เท่านั้น');
+            }
+        });
+        function OpenPopupCenter(pageURL, title, w, h) {
+            var left = (screen.width - w) / 2;
+            var top = (screen.height - h) / 4;  // for 25% - devide by 4  |  for 33% - devide by 3
+            var targetWin = window.open(pageURL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+        }
 
         function addreport(stid, memo, normal) {
-            var webMethod ="../service/report.asmx/addReport";
-
+            var webMethod = "../service/report.asmx/addReport";
+           
             var dataToSend = JSON.stringify({
                 'comment': memo, 'stuid': stid, 'normal': normal, 'doctor': "<%= Session["fullname"].ToString() %>"
             });
@@ -398,7 +438,7 @@
             });
 
             function getreport(stuid) {
-                var webMethod ="../service/report.asmx/getReport";
+                var webMethod = "../service/report.asmx/getReport";
                 //alert(webMethod);
                 $.ajax({
                     type: "POST",
@@ -446,10 +486,10 @@
                             var dt = txt[4];
                             var tm = txt[5];
 
-                            txt = '<table style="width: 100%;"  border="0">';
+                            txt = '<table style="width: 100%;" border="0">';
                             txt += ' <tbody>';
                             txt += '<tr>';
-                            txt += '<td style = "width: 50%; text-align: center;" colspan = "2" ><%= ins() %></td>';
+                            txt += '<td style="width: 50%; text-align: center;" colspan="2" ><%= ins() %></td>';
                             txt += '</tr>';
                             txt += '    <tr> ';
                             txt += '         <td style="width: 50%;">HN:' + hn + '</td> ';
@@ -459,9 +499,9 @@
                             txt += '        <td style="width: 50%;">รายการ : ' + desc + '</td> ';
                             txt += '         <td style="width: 50%; text-align: justify;">วันที่ทำ : ' + dt + ' ' + tm + '</td>';
                             txt += '    </tr>  ';
-                            txt += '<tr><td style = "width: 50%; text-align: right;" colspan = "2" >อ่านผลโดย : <%= Session["fullname"] %></td>';
+                            txt += '<tr><td style="width: 50%; text-align: right;" colspan="2" >อ่านผลโดย : <%= Session["fullname"] %></td>';
                             txt += '</tr>';
-                            txt += '<tr><td style = "width: 50%; text-align: right;" colspan = "2" >ลงวันที่ : <%= formatDate(DateTime.Now.ToString("yyyyMMdd")) %></td>';
+                            txt += '<tr><td style="width: 50%; text-align: right;" colspan="2" >ลงวันที่ : <%= formatDate(DateTime.Now.ToString("yyyyMMdd",uTH),true) + " " + DateTime.Now.ToString("HH:mm")%></td>';
                             txt += '</tr>';
                             txt += ' </tbody> ';
                             txt += '</table>';

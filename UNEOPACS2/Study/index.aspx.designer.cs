@@ -69,24 +69,6 @@ namespace UNEOPACS2.Study
         protected global::System.Web.UI.WebControls.TextBox txtDt2;
 
         /// <summary>
-        /// bnToday control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button bnToday;
-
-        /// <summary>
-        /// bnYesterday control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button bnYesterday;
-
-        /// <summary>
         /// txtDesc control.
         /// </summary>
         /// <remarks>
@@ -103,6 +85,24 @@ namespace UNEOPACS2.Study
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBoxList cbMod;
+
+        /// <summary>
+        /// bnToday control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button bnToday;
+
+        /// <summary>
+        /// bnYesterday control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button bnYesterday;
 
         /// <summary>
         /// bnFind control.
